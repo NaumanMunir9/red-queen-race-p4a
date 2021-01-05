@@ -97,7 +97,7 @@ const Race = () => {
       redQueen_alice.getAnimation().playbackRate = playbackRate_redQueen;
       adjustBackgroundPlayback();
     });
-  });
+  }, []);
 
   return (
     <div className="wrapper">
