@@ -18,7 +18,11 @@ const Race = () => {
     iterations: Infinity,
   };
 
-  // --------------------------BACKGROUND 1 & 2----------------------------
+  const spriteFrames = [
+    { transform: "translateY(0)" },
+    { transform: "translateY(-100%)" },
+  ];
+
   const background1Movement = useWebAnimations({
     keyframes: sceneryFrames,
     timing: sceneryTimingBackground,
@@ -29,7 +33,6 @@ const Race = () => {
     timing: sceneryTimingBackground,
   });
 
-  // --------------------------FOREGROUND 1 & 2----------------------------
   const foreground1Movement = useWebAnimations({
     keyframes: sceneryFrames,
     timing: sceneryTimingForeground,
@@ -39,12 +42,6 @@ const Race = () => {
     keyframes: sceneryFrames,
     timing: sceneryTimingForeground,
   });
-
-  // --------------------------ALICE AND RED-QUEEN----------------------------
-  const spriteFrames = [
-    { transform: "translateY(0)" },
-    { transform: "translateY(-100%)" },
-  ];
 
   const redQueen_alice = useWebAnimations({
     keyframes: spriteFrames,
@@ -57,25 +54,25 @@ const Race = () => {
     },
   });
 
-  let playbackRate_redQueen = 1;
-  let playbackRate_background = 0;
-
-  var adjustBackgroundPlayback = function () {
-    if (playbackRate_redQueen < 0.8) {
-      playbackRate_background = (playbackRate_redQueen / 2) * -1;
-    } else if (playbackRate_redQueen > 1.2) {
-      playbackRate_background = playbackRate_redQueen / 2;
-    } else {
-      playbackRate_background = 0;
-    }
-
-    background1Movement.getAnimation().playbackRate = playbackRate_background;
-    background2Movement.getAnimation().playbackRate = playbackRate_background;
-    foreground1Movement.getAnimation().playbackRate = playbackRate_background;
-    foreground2Movement.getAnimation().playbackRate = playbackRate_background;
-  };
-
   useEffect(() => {
+    let playbackRate_redQueen = 1;
+    let playbackRate_background = 0;
+
+    var adjustBackgroundPlayback = function () {
+      if (playbackRate_redQueen < 0.8) {
+        playbackRate_background = (playbackRate_redQueen / 2) * -1;
+      } else if (playbackRate_redQueen > 1.2) {
+        playbackRate_background = playbackRate_redQueen / 2;
+      } else {
+        playbackRate_background = 0;
+      }
+
+      background1Movement.getAnimation().playbackRate = playbackRate_background;
+      background2Movement.getAnimation().playbackRate = playbackRate_background;
+      foreground1Movement.getAnimation().playbackRate = playbackRate_background;
+      foreground2Movement.getAnimation().playbackRate = playbackRate_background;
+    };
+
     const foreground_animation = foreground1Movement.getAnimation();
     foreground_animation.currentTime =
       foreground_animation.effect.getTiming().duration / 2;
@@ -97,7 +94,7 @@ const Race = () => {
       redQueen_alice.getAnimation().playbackRate = playbackRate_redQueen;
       adjustBackgroundPlayback();
     });
-  }, []);
+  });
 
   return (
     <div className="wrapper">
